@@ -11,7 +11,7 @@ import datetime
 SERVER = 'bglive-a.bitgravity.com'
 SERVER_PATH = '/twit/live/high'
 URL = 'http://bglive-a.bitgravity.com/twit/live/high'
-WORKING_DIR = '/usr/dvr/recordings'
+WORKING_DIR = '/var/dvr/recordings'
 FFMPEG = '/usr/local/bin/ffmpeg'
 RECORD_HOURS = 10
 
@@ -52,7 +52,7 @@ def transcode(filelist, out_filename):
         print cmd
     filelist_str = "|".join(ts_filelist)
     fmt = '%s -i "concat:%s" -c copy -bsf:a aac_adtstoasc "%s"'
-    cmd = fmt % (FFMEPG, filelist_str, out_filename)
+    cmd = fmt % (FFMPEG, filelist_str, out_filename)
     os.system(cmd)
     for ts_file in ts_filelist:
         os.remove(ts_file)
