@@ -13,7 +13,7 @@ import sys
 SERVER = 'bglive-a.bitgravity.com'
 SERVER_PATH = '/twit/live/high'
 URL = 'http://bglive-a.bitgravity.com/twit/live/high'
-WORKING_DIR = '/usr/dvr/recordings'
+WORKING_DIR = '/var/dvr/recordings'
 FFMPEG = '/usr/local/bin/ffmpeg'
 RECORD_HOURS = 10
 
