@@ -17,6 +17,26 @@ WORKING_DIR = '/var/dvr/recordings'
 FFMPEG = '/usr/local/bin/ffmpeg'
 RECORD_HOURS = 10
 
+# globals
+START_TIME = 0
+END_TIME = 1
+LAST_UPDATE = datetime.datetime.now()
+
+def pacify():
+    global START_TIME
+    global END_TIME
+    global LAST_UPDATE
+
+    now = datetime.datetime.now()
+    if now - LAST_UPDATE > datetime.timedelta(seconds=5):
+        LAST_UPDATE = now
+        try:
+            with open('/var/dvr/pr0n', 'w') as f:
+                print >>f, "Time remaining:", END_TIME - now
+        except:
+            # don't stop recording because of the pacifier.
+            pass
+
 def record(until):
     filelist = []
     done = False
@@ -41,6 +61,7 @@ def record(until):
                 if until <= now:
                     done = True
                     break
+                pacify()
     return filelist
 
 def transcode(filelist, out_filename):
@@ -61,11 +82,15 @@ def transcode(filelist, out_filename):
     print cmd
 
 def main():
+    global START_TIME
+    global END_TIME
     os.chdir(WORKING_DIR)
     now = datetime.datetime.now()
     now_str = now.strftime("%Y%m%d_%H%M%S")
     delta = datetime.timedelta(0, RECORD_HOURS * 60 * 60)
     until = now + delta
+    START_TIME = now
+    END_TIME = until
     filelist = record(until)
     transcode(filelist, now_str + '.mp4')
 
