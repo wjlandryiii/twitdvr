@@ -75,7 +75,7 @@ def transcode(filelist, out_filename):
         print cmd
     filelist_str = "|".join(ts_filelist)
     fmt = '%s -i "concat:%s" -c copy -bsf:a aac_adtstoasc "%s"'
-    cmd = fmt % (FFMEPG, filelist_str, out_filename)
+    cmd = fmt % (FFMPEG, filelist_str, out_filename)
     os.system(cmd)
     for ts_file in ts_filelist:
         os.remove(ts_file)
@@ -95,6 +95,11 @@ def main():
     transcode(filelist, now_str + '.mp4')
 
 if __name__ == '__main__':
+    if "-h" in sys.argv:
+        print "./record.py [ -l hours] [ -d hours]"
+        print "\t -l: record time in hours (default 10)"
+        print "\t -d: delay time in hours (default 0)"
+        sys.exit(1)
     if "-d" in sys.argv:
         i = sys.argv.index("-d")
         if i + 1 < len(sys.argv):
@@ -105,6 +110,13 @@ if __name__ == '__main__':
         else:
             print "./record.py -d [hours]"
             sys.exit(1)
+    if "-l" in sys.argv:
+        i = sys.argv.index("-l")
+        if i + 1 < len(sys.argv):
+            record_hours = sys.argv[i+1]
+            RECORD_HOURS = float(record_hours)
+        else:
+            print "./record.py -l [hours]"
     print "Start recording at ", datetime.datetime.now()
     sys.stdout.flush()
     main()
