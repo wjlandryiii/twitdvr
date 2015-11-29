@@ -6,6 +6,8 @@
 import os
 import httplib
 import datetime
+import time
+import sys
 
 # 1073741824 bytes at a time
 SERVER = 'bglive-a.bitgravity.com'
@@ -68,4 +70,16 @@ def main():
     transcode(filelist, now_str + '.mp4')
 
 if __name__ == '__main__':
+    if "-d" in sys.argv:
+        i = sys.argv.index("-d")
+        if i + 1 < len(sys.argv):
+            delay_hours = sys.argv[i+1]
+            print "Waiting for: ", delay_hours, "Hours"
+            sys.stdout.flush()
+            time.sleep(float(delay_hours) * 60.0 * 60.0)
+        else:
+            print "./record.py -d [hours]"
+            sys.exit(1)
+    print "Start recording at ", datetime.datetime.now()
+    sys.stdout.flush()
     main()
