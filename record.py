@@ -15,7 +15,7 @@ SERVER_PATH = '/twit/live/high'
 URL = 'http://bglive-a.bitgravity.com/twit/live/high'
 WORKING_DIR = '/var/dvr/recordings'
 FFMPEG = '/usr/local/bin/ffmpeg'
-RECORD_HOURS = 10
+RECORD_HOURS = 10  # Can be changed with option -l
 
 # globals
 START_TIME = 0
@@ -97,7 +97,7 @@ def main():
 if __name__ == '__main__':
     if "-h" in sys.argv:
         print "./record.py [ -l hours] [ -d hours]"
-        print "\t -l: record time in hours (default 10)"
+        print "\t -l: record time lenght in hours (default 10)"
         print "\t -d: delay time in hours (default 0)"
         sys.exit(1)
     if "-d" in sys.argv:
