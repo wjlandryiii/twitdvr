@@ -1,8 +1,8 @@
 TWIT DVR
 ========
 
-Depenancies
-===========
+Dependencies
+============
 
 ```
 brew install ffmpeg
